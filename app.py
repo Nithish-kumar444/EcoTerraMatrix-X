@@ -12,63 +12,102 @@ import cv2
 from PIL import Image
 import pickle
 import joblib
+import os
+import gdown
+import os
+import gdown
+import joblib
+import pickle
+import numpy as np
+import pandas as pd
+import tensorflow as tf
+import streamlit as st
 
-# Loading data from git hub for continent and country wise dats
+MODEL_FILES = {
+    "individual_model_tree_model.pkl": "10pyik0KkI0e9PVtW19FkmnPSgJkwBJfi",
+    "individual_model_preprocessor.pkl": "1n1dxtSM0ZcVmb565QWjGSaOMzM_89-5c",
+    "Vehicle_model_tree_model.pkl": "13Aywt-fM8K6n8AdKGlOWCbW89W4KvJw6",
+    "Vehicle_model_preprocessor.pkl": "1_fZ__caRCFRakam0fR0-flzxSYwzJMaD",
+    "industry_model_tree_model.pkl": "1dpfwxdndv2pfxMNCOr34qIcEgVfBwo5i",
+    "industry_model_preprocessor.pkl": "1v-8__qYcEZocPAZyepPBTsYJiEZdNru7",
+    "scope3_model_tree_model.pkl": "1EevUJVqzccOLOrysFKcraYRs3z5i7w3n",
+    "scope3_model_preprocessor.pkl": "1SO_G0uJllqELzjstuCHA9pnU_XAWZwKu",
+    "carbon_emission_model.keras": "1pkwr5NZL1uJBHiEEs9v7LH4Fz_Raqs4o",
+    "class_names.pkl": "1hV5Z_FKoJfi9sMcu1DU_pkU6dqRH_xZk"
+}
+
+@st.cache_resource
+def download_all_models():
+    for filename, file_id in MODEL_FILES.items():
+        if not os.path.exists(filename):
+            url = f"https://drive.google.com/uc?id={file_id}"
+            st.write(f"Downloading {filename}...")
+            gdown.download(url, filename, quiet=False)
+    return True
+
+download_all_models()
 
 @st.cache_data
 def load_data():
     url = "https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv"
     df = pd.read_csv(url)
+
     last_year = df['year'].max()
+
     if last_year < 2026:
-        future_years = [df[df['year'] == last_year].copy().assign(year=y, co2=lambda x: x['co2'] * (1 + np.random.uniform(-0.005, 0.01))) for y in range(last_year+1, 2027)]
+        future_years = []
+        for y in range(last_year + 1, 2027):
+            temp = df[df['year'] == last_year].copy()
+            temp['year'] = y
+            temp['co2'] = temp['co2'] * (1 + np.random.uniform(-0.005, 0.01))
+            future_years.append(temp)
+
         df = pd.concat([df] + future_years, ignore_index=True)
+
     return df
 
 df = load_data()
-
-if 'zoomed_chart' not in st.session_state:
+if "zoomed_chart" not in st.session_state:
     st.session_state.zoomed_chart = None
-
-# Loading Regression Model
 
 @st.cache_resource
 def load_individual_model():
-    model = joblib.load('individual_model_tree_model.pkl')
-    preprocessor = joblib.load('individual_model_preprocessor.pkl')
+    model = joblib.load("individual_model_tree_model.pkl")
+    preprocessor = joblib.load("individual_model_preprocessor.pkl")
     return model, preprocessor
+
 
 @st.cache_resource
 def load_transport_model():
-    model = joblib.load('Vehicle_model_tree_model.pkl')
-    preprocessor = joblib.load('Vehicle_model_preprocessor.pkl')
+    model = joblib.load("Vehicle_model_tree_model.pkl")
+    preprocessor = joblib.load("Vehicle_model_preprocessor.pkl")
     return model, preprocessor
+
 
 @st.cache_resource
 def load_industry_model():
-    model = joblib.load('industry_model_tree_model.pkl')
-    preprocessor = joblib.load('industry_model_preprocessor.pkl')
+    model = joblib.load("industry_model_tree_model.pkl")
+    preprocessor = joblib.load("industry_model_preprocessor.pkl")
     return model, preprocessor
+
 
 @st.cache_resource
 def load_scope3_model():
-    model = joblib.load('scope3_model_tree_model.pkl')
-    preprocessor = joblib.load('scope3_model_preprocessor.pkl')
+    model = joblib.load("scope3_model_tree_model.pkl")
+    preprocessor = joblib.load("scope3_model_preprocessor.pkl")
     return model, preprocessor
 
-# Loading Cnn Model
-
 @st.cache_resource
-def load_model():
-    model = tf.keras.models.load_model('carbon_emission_model.keras')
+def load_cnn_model():
+    cnn_model = tf.keras.models.load_model("carbon_emission_model.keras")
 
-    # Loading Class Data File
-    with open('class_names.pkl', 'rb') as f:
-        original_class_names = pickle.load(f)
+    with open("class_names.pkl", "rb") as f:
+        class_names = pickle.load(f)
 
-    return model, original_class_names
+    return cnn_model, class_names
 
-model, original_class_names = load_model()
+
+cnn_model, original_class_names = load_cnn_model()
 
 
 # Setting page configuration
