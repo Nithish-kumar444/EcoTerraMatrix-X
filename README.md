@@ -46,7 +46,14 @@ pip install streamlit pyngrok pandas numpy scikit-learn tensorflow plotly
 └── README.md
 
 ## ml model links (
-1. 
+1. https://drive.google.com/file/d/1_fZ__caRCFRakam0fR0-flzxSYwzJMaD/view?usp=drive_link
+2. https://drive.google.com/file/d/13Aywt-fM8K6n8AdKGlOWCbW89W4KvJw6/view?usp=drive_link
+3. https://drive.google.com/file/d/1n1dxtSM0ZcVmb565QWjGSaOMzM_89-5c/view?usp=drive_link
+4. https://drive.google.com/file/d/10pyik0KkI0e9PVtW19FkmnPSgJkwBJfi/view?usp=drive_link
+5. https://drive.google.com/file/d/1v-8__qYcEZocPAZyepPBTsYJiEZdNru7/view?usp=drive_link
+6. https://drive.google.com/file/d/1dpfwxdndv2pfxMNCOr34qIcEgVfBwo5i/view?usp=drive_link
+7. https://drive.google.com/file/d/1SO_G0uJllqELzjstuCHA9pnU_XAWZwKu/view?usp=drive_link
+8. https://drive.google.com/file/d/1EevUJVqzccOLOrysFKcraYRs3z5i7w3n/view?usp=drive_link
 )
 
 ## dl models(
