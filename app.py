@@ -28,13 +28,20 @@ MODEL_FILES = {
     "class_names.pkl": "1hV5Z_FKoJfi9sMcu1DU_pkU6dqRH_xZk"
 }
 
+def download_file_from_drive(filename, file_id):
+    if not os.path.exists(filename):
+        url = f"https://drive.google.com/uc?id={file_id}"
+        try:
+            gdown.download(url, filename, quiet=False, fuzzy=True)
+        except Exception as e:
+            st.error(f"Failed to download {filename}")
+            st.stop()
+
+
 @st.cache_resource
 def download_all_models():
     for filename, file_id in MODEL_FILES.items():
-        if not os.path.exists(filename):
-            url = f"https://drive.google.com/uc?id={file_id}"
-            st.write(f"Downloading {filename}...")
-            gdown.download(url, filename, quiet=False)
+        download_file_from_drive(filename, file_id)
     return True
 
 download_all_models()
