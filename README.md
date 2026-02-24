@@ -29,10 +29,10 @@ pip install streamlit pyngrok pandas numpy scikit-learn tensorflow plotly
 
 ## 📂 Project Structure
 ### Project Folder
-####│
-####├── app.py
-####├── model/
-####│   ├── ml_model.pkl
+│
+├── app.py
+├── model/
+│   ├── ml_model.pkl
 │   ├── ml_model.pkl
 │   ├── ml_model.pkl
 │   ├── ml_model.pkl
@@ -46,17 +46,10 @@ pip install streamlit pyngrok pandas numpy scikit-learn tensorflow plotly
 └── README.md
 
 ## ml model links (
-│   ├── 
-│   ├── 
-│   ├── 
-│   ├── 
-│   ├── 
-│   ├── 
-│   ├── 
-│   ├── 
+1. 
 )
 
-## dl model links(
-│   ├── 
-│   ├── 
+## dl models(
+1. carbon_emission_model.keras
+2. class_names.pkl
 )
