@@ -28,11 +28,11 @@ pip install streamlit pyngrok pandas numpy scikit-learn tensorflow plotly
 
 
 ## 📂 Project Structure
-Project Folder
-│
-├── app.py
-├── model/
-│   ├── ml_model.pkl
+### Project Folder
+####│
+####├── app.py
+####├── model/
+####│   ├── ml_model.pkl
 │   ├── ml_model.pkl
 │   ├── ml_model.pkl
 │   ├── ml_model.pkl
