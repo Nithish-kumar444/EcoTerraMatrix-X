@@ -33,14 +33,6 @@ pip install streamlit pyngrok pandas numpy scikit-learn tensorflow plotly
 ├── app.py
 ├── model/
 │   ├── ml_model.pkl
-│   ├── ml_model.pkl
-│   ├── ml_model.pkl
-│   ├── ml_model.pkl
-│   ├── ml_model.pkl
-│   ├── ml_model.pkl
-│   ├── ml_model.pkl
-│   ├── ml_model.pkl
-│   ├── dl_model.pkl
 │   ├── dl_model.pkl
 ├── requirements.txt
 └── README.md
